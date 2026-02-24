@@ -55,7 +55,9 @@ function toggleStyle(id){
         allCardSection.classList.add('hidden');
         filterSection.classList.remove('hidden')
 
-
+    } else if(id == 'all-filter-btn'){
+        allCardSection.classList.remove('hidden');
+        filterSection.classList.add('hidden')
     }
 
 
@@ -65,7 +67,7 @@ function toggleStyle(id){
 } 
 
 mainContainer.addEventListener('click', function(event){
-    console.log(event.target.classList.contains('interview-btn'))
+    
    
 
     if(event.target.classList.contains('interview-btn')){
@@ -73,8 +75,10 @@ mainContainer.addEventListener('click', function(event){
     const companyName = parentNode.querySelector('.companyName').innerText;
     const companyRole = parentNode.querySelector('.companyRole').innerText;
     const salary = parentNode.querySelector('.salary').innerText;
-    const notApplied = parentNode.querySelector('.not-applied-btn').innerText;
+    const notApplied = parentNode.querySelector('.notAppliedBtn').innerText;
     const job = parentNode.querySelector('.job');
+
+    parentNode.querySelector('.notAppliedBtn').innerText = 'Applied'
 
     const cardInfo = {
         companyName, companyRole, salary, notApplied, job
@@ -83,7 +87,7 @@ mainContainer.addEventListener('click', function(event){
 
     const jobExist = interviewList.find(items=> items.companyName === cardInfo.companyName)
 
-    parentNode.querySelector('.not-applied-btn').innerText = 'Applied'
+    
     
     if (!jobExist) {
         interviewList.push(cardInfo);
@@ -92,6 +96,36 @@ mainContainer.addEventListener('click', function(event){
 
 
     }
+     else if(event.target.classList.contains('rejected-btn')){
+         const parentNode = event.target.parentNode.parentNode;
+    const companyName = parentNode.querySelector('.companyName').innerText;
+    const companyRole = parentNode.querySelector('.companyRole').innerText;
+    const salary = parentNode.querySelector('.salary').innerText;
+    const notApplied = parentNode.querySelector('.notAppliedBtn').innerText;
+    const job = parentNode.querySelector('.job');
+
+    parentNode.querySelector('.notAppliedBtn').innerText = 'Rejected'
+
+    const cardInfo = {
+        companyName, companyRole, salary, notApplied, job
+    }
+
+
+    const jobExist = rejectedList.find(items=> items.companyName === cardInfo.companyName)
+
+    
+    
+    if (!jobExist) {
+        rejectedList.push(cardInfo);
+    }
+    renderInterview()
+
+
+    }
+
+
+
+
 
 })
 
@@ -101,6 +135,7 @@ function renderInterview (){
 
 
     for (let interview of interviewList){
+        console.log(interview);
         
 
         let div = document.createElement('div');
@@ -109,17 +144,17 @@ function renderInterview (){
             <!-- part1 -->
             <div class="flex justify-between">
                 <div >
-                <h3 class="companyName font-bold text-xl">Mobile First Corp</h3>
-                <p class="companyRole">React Native Developer</p>
+                <h3 class="companyName font-bold text-xl">${interview.companyName}</h3>
+                <p class="companyRole">${interview.companyRole}</p>
             </div>
             <div><button><i class="fa-regular fa-trash-can"></i>
             </button> </div>
 
             </div>
             <!-- part2 -->
-             <p class="salary py-2">Remote • Full-time • $130,000 - $175,000</p>
-             <button class="not-applied-btn bg-gray-200 rounded-sm px-3 py-1 shadow-sm my-3">Not Applied</button>
-             <p class="job">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
+             <p class="salary py-2">${interview.salary}</p>
+             <button class="notAppliedBtn bg-gray-200 rounded-sm px-3 py-1 shadow-sm my-3">${interview.notAppliedBtn}</button>
+             <p class="job">${interview.job}</p>
 
              <!-- part3 -->
               <div>
@@ -128,6 +163,52 @@ function renderInterview (){
               </div>
 
         </div>`
+
+        calculateCount();
+
+
+        filterSection.appendChild(div)
+
+
+    }
+
+}
+
+
+function renderRejected (){
+    filterSection.innerHTML = ''
+
+
+    for (let rejected of rejectedList){
+        
+
+        let div = document.createElement('div');
+        div.className = `mx-auto w-[80%] bg-white shadow-sm p-5 rounded-md mt-5`
+        div.innerHTML = `<div >
+            <!-- part1 -->
+            <div class="flex justify-between">
+                <div >
+                <h3 class="companyName font-bold text-xl">${interview.companyName}</h3>
+                <p class="companyRole">${interview.companyRole}</p>
+            </div>
+            <div><button><i class="fa-regular fa-trash-can"></i>
+            </button> </div>
+
+            </div>
+            <!-- part2 -->
+             <p class="salary py-2">${interview.salary}</p>
+             <button class="notAppliedBtn bg-gray-200 rounded-sm px-3 py-1 shadow-sm my-3">${interview.notAppliedBtn}</button>
+             <p class="job">${interview.job}</p>
+
+             <!-- part3 -->
+              <div>
+                <button class="text-green-400 border-2 border-green-400 px-3 py-2 rounded-md">Interview</button>
+                <button class="text-red-400 border-2 border-red-400 px-3 py-2 rounded-md">Rejected</button>
+              </div>
+
+        </div>`
+
+        calculateCount();
 
 
         filterSection.appendChild(div)
