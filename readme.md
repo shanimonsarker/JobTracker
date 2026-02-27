@@ -13,5 +13,8 @@ Answer to the questions
 
 4. Event listener is way to handle multiple child by adding event listener to the parent. It's helpful because it helps in reducing writing code multiple times and for dynamic works. 
 
+5. preventDefault() is used to stop the default action of browser, but stopPropagation() is used to stop the event bubbling actions in DOM.
+
+
 
 
