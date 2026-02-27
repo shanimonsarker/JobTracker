@@ -11,4 +11,7 @@ Answer to the questions
 
 3. When any event starts from the target element to it's parent elements is called event bubbling.
 
+4. Event listener is way to handle multiple child by adding event listener to the parent. It's helpful because it helps in reducing writing code multiple times and for dynamic works. 
+
+
 
